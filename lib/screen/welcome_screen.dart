@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:jinjicouple/functions.dart';
+import 'package:jinjicouple/module/my_text.dart';
 import 'package:jinjicouple/screen/home_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
-
+  WelcomeScreen({Key? key}) : super(key: key);
+  MyText myText = MyText();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -13,9 +15,9 @@ class WelcomeScreen extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/tower.jpg"),
+              image: AssetImage("assets/images/welcome.jpg"),
               fit: BoxFit.cover,
-              opacity: 0.7,
+              opacity: 0.9,
             ),
           ),
           child: Padding(
@@ -26,35 +28,10 @@ class WelcomeScreen extends StatelessWidget {
                   flex: 9,
                   child: Column(
                     children: [
-                      Text(
-                        '환영합니다!',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 1.5,
-                        ),
-                      ),
+                      myText.bold(35, '진지커플 기록공간', Colors.white),
                       SizedBox(height: 12),
-                      Text(
-                        '나만의 추억을 저장하는 공간',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
+                      myText.bold(24, '지수와 진형이의 추억을 담는 공간', Colors.white),
                       SizedBox(height: 10),
-                      Text(
-                        '나만의 지도를 만드세요.',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -86,15 +63,7 @@ class WelcomeScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(
-                            '시작하기',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.2,
-                            ),
-                          ),
+                          myText.normal(18, '시작하기', Colors.white),
                           Icon(
                             Icons.arrow_forward,
                             color: Colors.white,
@@ -104,7 +73,8 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 60),
+                SizedBox(height: 40),
+                myText.bold(18, "© Copyright 2023, 서진형", Colors.white),
               ],
             ),
           ),

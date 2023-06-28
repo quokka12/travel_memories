@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:jinjicouple/functions.dart';
+import 'package:jinjicouple/module/my_text.dart';
+import 'package:jinjicouple/screen/post_screen.dart';
 import 'package:jinjicouple/widgets/home_app_bar.dart';
 import 'package:jinjicouple/widgets/home_bottom_bar.dart';
 
@@ -11,13 +16,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  MyText myText = MyText();
   var category = [
     '식당',
     '카페',
     '놀거리',
     '사진 명소',
-    '볼거리',
-    '풍경',
     '숙소',
   ];
   var placeName = [
@@ -51,23 +55,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         for (int i = 0; i < category.length; i++)
                           Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(color: Colors.black26, blurRadius: 4),
-                              ],
-                            ),
-                            child: Text(
-                              category[i],
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black26, blurRadius: 4),
+                                ],
                               ),
-                            ),
-                          ),
+                              child: myText.normal(
+                                  15, category[i], Colors.black87)),
                       ],
                     ),
                   ),
@@ -83,7 +82,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Map post = {
+                                'image': "assets/images/place${index + 1}.jpg",
+                                'name': placeName[index]
+                              };
+                              Get.to(PostScreen(post: post));
+                            },
                             child: Container(
                               height: 200,
                               decoration: BoxDecoration(
@@ -91,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(15),
                                 image: DecorationImage(
                                     image: AssetImage(
-                                        "images/place${index + 1}.jpg"),
+                                        "assets/images/place${index + 1}.jpg"),
                                     fit: BoxFit.cover),
                               ),
                             ),
@@ -101,12 +106,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  '${placeName[index]}',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600),
-                                ),
+                                myText.bold(
+                                    20, placeName[index], Colors.black87),
                                 Icon(Icons.more_horiz, size: 30),
                               ],
                             ),
@@ -121,7 +122,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: HomeBottomBar(),
     );
   }
 }

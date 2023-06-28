@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "957355946996",
+    "project_id": "jinjicouple-dd6f2",
+    "storage_bucket": "jinjicouple-dd6f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957355946996:android:0c2b31fd03071f10b7bfa1",
+        "android_client_info": {
+          "package_name": "com.jinjicouple.day2000.jinjicouple"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957355946996-pv4h0iaif2917ig51jnfe40v3o53msm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ3N7eztIHkDX0tlaHYisyoG3WSQvhPu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "957355946996-pv4h0iaif2917ig51jnfe40v3o53msm5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "957355946996-e9eb6aj7eog3gh09uiusa1j8hhsmpju9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jinjicouple.day2000.jinjicouple"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

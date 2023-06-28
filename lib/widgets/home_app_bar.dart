@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:jinjicouple/module/my_text.dart';
+import 'package:jinjicouple/screen/add_post/add_post_screen.dart';
+import 'package:jinjicouple/screen/dday_screen.dart';
+
+import '../functions.dart';
 
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({Key? key}) : super(key: key);
-
+  HomeAppBar({Key? key}) : super(key: key);
+  MyText myText = MyText();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -14,7 +21,7 @@ class HomeAppBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () => Get.to(DDayScreen()),
                 child: Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -41,14 +48,11 @@ class HomeAppBar extends StatelessWidget {
                     size: 26,
                   ),
                   SizedBox(width: 10),
-                  Text(
-                    "내가 만드는 여행일기",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                  )
+                  myText.normal(20, "진지커플 여행일기", Colors.black),
                 ],
               ),
               InkWell(
-                onTap: () {},
+                onTap: () => Get.to(AddPostScreen()),
                 child: Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(

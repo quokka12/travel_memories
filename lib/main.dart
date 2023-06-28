@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:jinjicouple/screen/welcome_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:jinjicouple/theme.dart';
+import 'firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -24,9 +32,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFEDF2F6)),
-      home: const WelcomeScreen(),
+    return GetMaterialApp(
+      theme: theme(),
+      home: WelcomeScreen(),
     );
   }
 }
