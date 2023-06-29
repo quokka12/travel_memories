@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:jinjicouple/functions.dart';
 import 'package:jinjicouple/module/my_text.dart';
+import 'package:jinjicouple/screen/home/home_screen.dart';
+
+import '../post/post.dart';
 
 class PostBottomBar extends StatelessWidget {
-  String name, content;
-  PostBottomBar({Key? key, required this.name, required this.content})
-      : super(key: key);
+  Post post;
+  PostBottomBar({Key? key, required this.post}) : super(key: key);
   MyText myText = MyText();
   @override
   Widget build(BuildContext context) {
@@ -25,67 +29,78 @@ class PostBottomBar extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                myText.bold(23, name, Colors.black87),
-                SizedBox(height: 12),
-                myText.normal(16, content, Colors.black87),
-                SizedBox(height: 20),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.asset(
-                            "assets/images/place1.jpg",
-                            fit: BoxFit.cover,
-                            width: 120,
-                            height: 90,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.asset(
-                            "assets/images/place2.jpg",
-                            fit: BoxFit.cover,
-                            width: 120,
-                            height: 90,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 120,
-                        height: 90,
-                        margin: EdgeInsets.only(right: 5),
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/place3.jpg"),
-                            fit: BoxFit.cover,
-                            opacity: 0.4,
-                          ),
-                        ),
-                        child: myText.normal(23, "10+", Colors.white),
-                      ),
-                    )
+                    myText.bold(myText.TITLE3, post.postTitle.toString(),
+                        Colors.black87),
+                    TextButton(
+                        onPressed: () {
+                          Get.dialog(
+                            AlertDialog(
+                              title: myText.normal(
+                                  myText.TITLE3, '추억 삭제', Colors.black87),
+                              content: myText.normal(
+                                  myText.BODY, '추억을 삭제하시겠습니까?', Colors.black87),
+                              actions: [
+                                TextButton(
+                                  child: myText.normal(
+                                      myText.TITLE3, '삭제', Colors.black87),
+                                  onPressed: () async {
+                                    Get.back();
+                                    await post.deleteImageFile();
+                                    await post.deletePost();
+
+                                    Get.to(HomeScreen());
+                                  },
+                                ),
+                                TextButton(
+                                  child: myText.normal(
+                                      myText.TITLE3, '닫기', Colors.black87),
+                                  onPressed: () => Get.back(),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        child: myText.underline(
+                            myText.BODY, '추억 삭제', Color(0xff808080))),
                   ],
-                )
+                ),
+                SizedBox(height: 10),
+                myText.normal(myText.BODY, '장소 : ${post.placeName.toString()}',
+                    Colors.black87),
+                SizedBox(height: 15),
+                myText.normal(
+                    myText.BODY, post.postContent.toString(), Colors.black87),
+                SizedBox(height: 20),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (int i = 0; i < post.storageUrls.length; i++) ...[
+                        imageWidget(post.storageUrls[i]),
+                        SizedBox(width: 5),
+                      ],
+                    ],
+                  ),
+                ),
               ],
             ),
           )
         ],
       ),
+    );
+  }
+
+  Widget imageWidget(url) {
+    return Container(
+      height: 150,
+      width: 200,
+      child: Image.network(url, fit: BoxFit.fill),
     );
   }
 }

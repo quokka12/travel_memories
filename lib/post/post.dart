@@ -16,18 +16,15 @@ class Post {
   String? postContent;
   String? placeName;
   String? category;
-  List? images;
   String? dateOfPost;
+  List imageUrls = [];
   List storageUrls = [];
 
-  void getPostInfo(
-      postTitle, postContent, placeName, category, images, dateOfPost) {
+  void getPostInfo(postTitle, postContent, placeName, category) {
     this.postTitle = postTitle;
     this.postContent = postContent;
     this.placeName = placeName;
     this.category = category;
-    this.images = images;
-    this.dateOfPost = dateOfPost;
   }
 
   Future addPostToFirebase() async {
@@ -38,20 +35,41 @@ class Post {
       "postContent": postContent,
       "placeName": placeName,
       "category": category,
-      "images": storageUrls,
+      "imageUrls": imageUrls,
+      "storageUrls": storageUrls,
       "dateOfPost": getToday(),
     });
   }
 
-  Future uploadImageFile(List<File> files) async {
+  Future deletePost() async {
+    try {
+      await collectionReference.doc(pid).delete();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future uploadImageFile(List<File?> files) async {
     try {
       final storageRef = storage.ref();
       for (final file in files) {
-        final mountainsRef = storageRef
-            .child('posts/')
-            .child('/${Timestamp.now()}.jpg'); //사진 저장 경로
-        UploadTask uploadTask = mountainsRef.putFile(file);
+        String name = '/${Timestamp.now()}.jpg';
+        final mountainsRef = storageRef.child('posts/').child(name); //사진 저장 경로
+        imageUrls.add(name);
+        UploadTask uploadTask = mountainsRef.putFile(file!);
         storageUrls.add(await (await uploadTask).ref.getDownloadURL());
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future deleteImageFile() async {
+    try {
+      final storageRef = storage.ref();
+      for (final file in imageUrls) {
+        final mountainsRef = storageRef.child('posts/').child(file); //사진
+        await mountainsRef.delete();
       }
     } catch (e) {
       print(e);

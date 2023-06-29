@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jinjicouple/functions.dart';
 import 'package:jinjicouple/module/my_text.dart';
-import 'package:jinjicouple/screen/home_screen.dart';
+
+import 'home/home_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({Key? key}) : super(key: key);
